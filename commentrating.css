@@ -1,0 +1,115 @@
+body{
+    font-size: 14px;
+    font-family: 'Courier New', Courier, monospace;
+    margin:0px;
+    padding:0px;
+    background: #FFF /* #262626; */
+}
+
+.rating{
+     position: relative; /* absolute */
+     /* top: 50%; */
+     left: 5%;  /*50%*/
+     /* right:50%; DELETE */
+    transform: translate(-50%,-50%) rotateY(180deg);
+    display: inline-flex; /*flex*/
+} 
+
+
+/*.rating*/ 
+ input[type=radio]  /*added [type=radio] */
+{
+  display: none; 
+}
+
+.rating label {
+
+    display: block;
+    cursor: pointer;
+    width: 20px; /*25px*/
+    color: #101010;
+}
+
+.rating label:before
+{
+    content: '\f005';
+    font-family: fontAwesome; 
+    position: absolute; 
+    display: block;
+    font-size: 20px; /*25px*/
+    color: #101010
+}
+
+.rating label:after
+{
+    content: '\f005';
+    font-family: fontAwesome; 
+    position: absolute; 
+    display: block;
+    font-size: 20px; /*25px*/
+    color:  yellow;  /* #1f9cff; */
+    top: 0;
+    opacity: 0;
+    transition: .1s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5); 
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after
+{
+   opacity: 1;
+}
+
+
+/****** FOR COMMENT SECTION *****/
+
+
+label[for="Comment"] {
+    display: block; /*block */
+    margin-bottom: 10px;
+    margin-left:25px; /*Might Delete*/
+    font-size: 18px; /*1em*/
+}  
+
+ textarea {
+    font-family:'Courier New', Courier, monospace;
+    font-size: 1em;
+    word-spacing: 1px;
+}
+
+textarea {
+ /* position: inherit; DELETE */
+ /* right:100px; DELETE */
+ display: flex; /*Might Delete*/
+ padding: 10px; /*10px*/
+ line-height: 1;
+ border-radius: 5px;
+ border: 1px solid #ccc;
+ box-shadow: 1px 1px 1px #999;  
+ margin-bottom: 10px; /*10px*/
+ margin-top: 25px; /*Might Delete*/ /*20*/
+ margin-left: 20px; /*Might Delete*/
+}
+
+button { /*Change this to a button*/
+    border: none;
+    font-weight: bold;
+    padding:1px; 
+    font-size: 14px; 
+    font-family: 'Courier New', Courier, monospace;
+    display: block; 
+    margin-left:20px; /*might delete*/
+}
+
+
+
+button:hover { /*change this to button*/
+ border: #000;
+ color:blue;font-size: 14px;
+ font-family: 'Courier New', Courier, monospace;
+}
+
+td {
+    display: relative; 
+} 
