@@ -11,7 +11,7 @@
     include 'init.php';
     #include 'header.php';
   $query = "SELECT bookid, bookcover, booktitle, price, bookrating FROM book";
-  $result = mysqli_query($link, $query);
+  $result = mysqli_query($conn, $query);
 ?>
 
 
@@ -25,19 +25,19 @@
     <?php while($query_row = mysqli_fetch_assoc($result)){ ?>
     <div class="col-md-3">
     <div class="product-top">
-        <img class="img-responsive img-thumbnail" src="images/<?php echo $query_row['bookcover']; ?>"> 
+        <img class="img-responsive img-thumbnail" src="images/<?php echo $query_row['bookcover']; ?>">
         <div class="overlay-right">
         <button type="button" class="btn btn-secondary" title="Add to Wishlist">
-           <i class="fa fa-heart-o"></i> 
+           <i class="fa fa-heart-o"></i>
         </button>
             <button type="button" class="btn btn-secondary" title="Add to Cart">
-           <i class="fa fa-shopping-cart"></i> 
+           <i class="fa fa-shopping-cart"></i>
         </button>
         </div>
     </div>
     <div class="product-bottom text-center">
   <?php
-      $rating = $query_row['bookrating']; 
+      $rating = $query_row['bookrating'];
       $rating_fill = 5 - ceil($rating);
 
 while($rating > 0)  {
@@ -68,5 +68,5 @@ while($rating > 0)  {
         <h5>$<?php echo $query_row['price'];?></h5>
     </div>
     </div>
-<?php } ?> 
-<?php } 
+<?php } ?>
+<?php }
