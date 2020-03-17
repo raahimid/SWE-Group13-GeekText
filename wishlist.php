@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>wishlist.html</title>
+        <title>Your Wishlist</title>
         <meta charset = "UTF-8" />
         
         <!--<link rel="stylesheet" href="wishlist.css">-->
@@ -17,13 +17,9 @@
             </fieldset>
         </form>
         <?php
-            $wishlists = array('','','');
-            $index = 0;
-            for($index = 0; $index <= 2; $index++) {
-                if(isset($_POST['createBtn'])) {
-                    $wishlists[$index] = createWishlist();
-                }
-                echo "The books is: " . $wishlists[$index];
+            $wishlist = " ";
+            if(isset($_POST['createBtn'])) {
+                    $wishlist = createWishlist();
             }
             
             function createWishlist() {
@@ -32,7 +28,21 @@
                     $wishlistName = $_POST['textBox'];
                 }
             }
+        ?>
 
+        <div id="listDiv" class="list">
+            <table class="wishlistTable">
+                <tr>
+                    <th><?php $wishlistName?></th>
+                </tr>
+                <tr>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                </tr>
+            </table>
+        </div> 
+
+        <?php
             function insertIntoWishlist() {
                 include 'db_connection.php';
                 $conn = OpenCon();
