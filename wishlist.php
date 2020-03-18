@@ -3,8 +3,7 @@
     <head>
         <title>Your Wishlist</title>
         <meta charset = "UTF-8" />
-        
-        <!--<link rel="stylesheet" href="wishlist.css">-->
+        <link rel="stylesheet" type="text/css" href="wishlist.css">
     </head>
     <body>
         <form method="POST" action="wishlist.php" autocomplete="off">
@@ -16,6 +15,14 @@
                         class="button" value="Create"/>
             </fieldset>
         </form>
+            <h1>Your Wishlist</h1>
+            <ul id="wishlistHead">
+                <li>Book</li>
+                <li>Quantity</li>
+                <li>Remove</li>
+                <li>Add To Shopping Cart</li>
+            </ul>
+            <?php showWishlist() ?>
         <?php
             $wishlist = " ";
             if(isset($_POST['createBtn'])) {
@@ -28,21 +35,26 @@
                     $wishlistName = $_POST['textBox'];
                 }
             }
-        ?>
 
-        <div id="listDiv" class="list">
-            <table class="wishlistTable">
-                <tr>
-                    <th><?php $wishlistName?></th>
-                </tr>
-                <tr>
-                    <th>Book</th>
-                    <th>Quantity</th>
-                </tr>
-            </table>
-        </div> 
+            function showWishlist() {
+                $result = " ";
 
-        <?php
+                include 'db_connection.php';
+                $conn = openCon();
+
+                $sql = "SELECT BookID, Quantity FROM wishlist";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo "<p class='data'> BookID: " . $row["BookID"] . " Quantity: " . $row["Quantity"].  "<br>", "</p>";
+                    }
+                } else {
+                echo "0 results";
+                }
+            }
+        
             function insertIntoWishlist() {
                 include 'db_connection.php';
                 $conn = OpenCon();

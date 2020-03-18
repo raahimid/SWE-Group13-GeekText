@@ -1,0 +1,55 @@
+fieldset {
+    border: 0;
+}
+
+legend {
+    font-size: 20;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input[type=text] {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 16px 32px;
+    margin: 4px 2px;
+    cursor: pointer;
+    
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 15px;
+    padding-bottom: 5px;
+}
+
+#wishlistHead {
+    padding-left: 15px;
+    position: absolute;
+}
+
+li {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #4CAF50;
+    color: white;
+    display: block;
+    padding: 5px;
+    padding-block: 15px;
+    border-style: solid;
+    border-width: 1px;
+    float: left; 
+}
+
+[class="data"] {
+    position: relative;
+}
