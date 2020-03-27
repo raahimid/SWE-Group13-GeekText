@@ -1,24 +1,30 @@
 <html>
 <head>
-<title>E-Commerce Website </title>
-<link rel="stylesheet" href="booksort.css">
+<title>Geek Text</title>
+<link rel="stylesheet" href="css/booksort.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="plugin/simple-bootstrap-paginator.js"></script>
+<script src="js/pagination.js"></script>
 </head>
 <?php
     include 'init.php';
-    #include 'header.php';
+    include 'header.php';
   $query = "SELECT bookid, bookcover, booktitle, price, bookrating FROM book";
-  $result = mysqli_query($conn, $query);
+  $result = mysqli_query($link, $query);
+$perPage = 5;
+$sqlQuery = "SELECT * FROM book";
+$totalRecords = mysqli_num_rows($result);
+$totalPages = ceil($totalRecords/$perPage)
 ?>
 
-
+<div id="pagination"></div>    
+<input type="hidden" id="totalPages" value="<?php echo $totalPages; ?>">
 <section class="on-sale">
 <div class="container">
     <div class="title-box">
-    <h2>On Sale</h2>
     <?php for($i = 0; $i < mysqli_num_rows($result); $i++){ ?>
     </div>
     <div class="row">
@@ -65,8 +71,13 @@ while($rating > 0)  {
     }
 } ?>
         <h3><?php echo $query_row['booktitle'];?> </h3>
-        <h5>$<?php echo $query_row['price'];?></h5>
+        <h5><?php echo $query_row['price'];?></h5>
     </div>
-    </div>
+</div>
+
 <?php } ?>
-<?php }
+<?php }?>
+
+
+
+

@@ -1,5 +1,23 @@
+<?php
+// including database connection
+require 'init.php';
+$bookcode = $_GET['bookid'];
+echo $bookcode;
+$result = mysqli_query($conn, "select comment,bookcover from book
+left join review on book.bookid = review.bookid
+where book.bookid=$bookcode");
+while($res = mysqli_fetch_array($result))
+{
+  $comment = $res['comment'];
+  $cover = $res['bookcover'];
+}
+echo $comment;
+echo $cover;
+
+?>
 <!DOCTYPE html>
 <html>
+
 
 <head>
   <meta charset="utf-8">
@@ -51,7 +69,7 @@
       <div class="row">
         <div class="col-lg-6">
           <h1>BookTitle</h1>
-          <img class="title-image" src="images/iphone6.png" alt="bookimage">
+          <img class="img-responsive img-thumbnail" src="images/<?php echo $cover; ?>">
         </div>
         <div class="col-lg-6">
           <p class = "bookdetails" "author-name">Author: <%= book.Author %></p>
@@ -75,7 +93,10 @@
     <div class="row">
       <h4>Reviews</h4>
 
+      
+
     </div>
+    <p><?php echo $comment ?></p>
   </section>
 
 
