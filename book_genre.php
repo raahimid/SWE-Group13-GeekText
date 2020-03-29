@@ -13,7 +13,7 @@
 
 	// Get the list of all genres in DB
 	$genres = "SELECT distinct genre FROM book";
-	$genresList = mysqli_query($link, $genres);
+	$genresList = mysqli_query($conn, $genres);
 ?>
 
 
@@ -45,7 +45,7 @@
         <h3>All Genres</h3>
         <?php
 		$sql = "SELECT booktitle, price, bookid, bookcover, bookrating FROM book";
-		$bookList = mysqli_query($link, $sql);
+		$bookList = mysqli_query($conn, $sql);
 
 		echo'<div style="display:flex; flex-wrap: wrap;">';
 		while ($row=mysqli_fetch_array($bookList)) {
@@ -59,7 +59,7 @@
 	<!-- Display of books Specific by genre -->
     <?php
     $genres = "SELECT distinct genre FROM book";
-	$genresList = mysqli_query($link, $genres);
+	$genresList = mysqli_query($conn, $genres);
 	// Echo Genre selected
 	while( $genresRow=mysqli_fetch_array($genresList)) {
 		$current = $genresRow['genre'];
@@ -73,7 +73,7 @@
 
 		// Echo all books for the specified genre
 	    $sql = "SELECT booktitle, price, bookid, bookcover, bookrating FROM book WHERE genre = '$current'";
-	    $bookList = mysqli_query($link, $sql);
+	    $bookList = mysqli_query($conn, $sql);
 		echo'<div style="display:flex; flex-wrap: wrap;">';
 		while ($row=mysqli_fetch_array($bookList)) {
 			include("response.php");	
