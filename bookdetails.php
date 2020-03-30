@@ -8,14 +8,14 @@
 
 <?php
 // including database connection
-require 'config.php';
+require 'init.php';
 
 $bookcode = $_GET['bookid'];
 
 if(isset($_POST['hihi'])){
 
 
-  $result = mysqli_query($link, "INSERT INTO `cart` (`UserId`,`BookId`,`quantity`) VALUES ('1',$bookcode,'1')");
+  $result = mysqli_query($conn, "INSERT INTO `cart` (`UserId`,`BookId`,`quantity`) VALUES ('1',$bookcode,'1')");
 
   if($result->num_rows > 0){
 
@@ -34,20 +34,21 @@ if(isset($_POST['hihi'])){
 }
 
 
-$result = mysqli_query($link, "SELECT Rating,Comment,bookcover FROM book
-LEFT JOIN review ON book.bookid = review.bookid
+$result = mysqli_query($conn, "select comment,bookcover,BookTitle, PublisherName, BookRating, genre, Price,
+ReleaseDate, AuthorName from book left join review on book.bookid = review.bookid JOIN publisher on book.PublisherID = publisher.PublisherID
+JOIN author on book.AuthorID = author.AuthorID
 where book.bookid=$bookcode");
-
-
-
-while($res = mysqli_fetch_assoc($result))
-
+while($res = mysqli_fetch_array($result))
 {
-   // echo $rating = $res['Rating'];
-   //echo $comment = $res['Comment'];
-   //$comment = $res['Comment'];
-   $cover = $res['bookcover'];
-
+  $comment = $res['comment'];
+  $cover = $res['bookcover'];
+  $BookTitle = $res['BookTitle'];
+  $PublisherName = $res['PublisherName'];
+  $Price = $res['Price'];
+  $Genre = $res['genre'];
+  $ReleaseDate = $res['ReleaseDate'];
+  $BookRating = $res['BookRating'];
+  $AuthorName = $res['AuthorName'];
 }
 
 
@@ -88,13 +89,13 @@ while($res = mysqli_fetch_assoc($result))
 
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="">Cart</a>
+              <a class="nav-conn" href="">Cart</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Sign Up</a>
+              <a class="nav-conn" href="">Sign Up</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Login</a></a>
+              <a class="nav-conn" href="">Login</a></a>
             </li>
           </ul>
         </div>
@@ -104,22 +105,22 @@ while($res = mysqli_fetch_assoc($result))
 
 
       <!-- Title -->
-      <div class="row">
-        <div class="col-lg-6">
-          <h1>BookTitle</h1>
-          <img class="img-responsive img-thumbnail" src="images/<?php echo $cover; ?>">
-        </div>
-        <div class="col-lg-6">
-          <p class = "bookdetails" "author-name">Author: <%= book.Author %></p>
-          <p class = "bookdetails" "publisher-name">Publisher: <%= book.Publisher %></p>
-          <p class = "bookdetails" "isbn">ISBN: <%= book.ISBN %></p>
-          <p class = "bookdetails" "book-genre">Genre: <%= book.Genre %></p>
-          <p class = "bookdetails" "avg-rating">Avg. Rating:</p>
-          <p class = "bookdetails" "publish-date">Published On: <%= book.PublicationDate %></p>
-          <p class = "bookdetails" "book-price">Price: $<%= book.Price %></p>
-        </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h1><?php echo $BookTitle; ?></h1>
+        <img class="img-responsive img-thumbnail" src="images/<?php echo $cover; ?>">
+      </div>
+      <div class="col-lg-6">
+        <p class = "bookdetails" "author-name">Author: <?php echo $AuthorName; ?></p>
+        <p class = "bookdetails" "publisher-name">Publisher: <?php echo $PublisherName; ?></p>
+        <p class = "bookdetails" "book-genre">Genre: <?php echo $Genre; ?></p>
+        <p class = "bookdetails" "avg-rating">Avg. Rating: <?php echo $BookRating; ?></p>
+        <p class = "bookdetails" "publish-date">Published On: <?php echo $ReleaseDate; ?></p>
+        <p class = "bookdetails" "book-price">Price: <?php echo $Price; ?></p>
       </div>
     </div>
+</div>
+
 
     </div>
   </section>
@@ -135,7 +136,7 @@ while($res = mysqli_fetch_assoc($result))
   <p>
   <?php
 
-  $result = mysqli_query($link, "SELECT Rating,Comment,bookcover FROM book
+  $result = mysqli_query($conn, "SELECT Rating,Comment,bookcover FROM book
   LEFT JOIN review ON book.bookid = review.bookid
   where book.bookid=$bookcode");
 
