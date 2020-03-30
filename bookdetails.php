@@ -1,20 +1,58 @@
+
+
+<form method="POST">
+   <input type="submit" name="hihi" title="Add to Cart" placeholder="Add to Cart"> <!-- Add Cart</button> -->
+</form>
+
+
+
 <?php
 // including database connection
-require 'init.php';
+require 'config.php';
+
 $bookcode = $_GET['bookid'];
-echo $bookcode;
-$result = mysqli_query($conn, "select comment,bookcover from book
-left join review on book.bookid = review.bookid
-where book.bookid=$bookcode");
-while($res = mysqli_fetch_array($result))
-{
-  $comment = $res['comment'];
-  $cover = $res['bookcover'];
+
+if(isset($_POST['hihi'])){
+
+
+  $result = mysqli_query($link, "INSERT INTO `cart` (`UserId`,`BookId`,`quantity`) VALUES ('1',$bookcode,'1')");
+
+  if($result->num_rows > 0){
+
+    while ($row = mysqli_fetch_assoc($result))
+             {
+               echo "<tr>";
+     echo "<td>" . $row['UserId'] . "</td>";
+     echo "<td>" . $row['BookId'] . "</td>";
+     echo "<td>" . $row['quantity']. "</td>";
+ echo "</tr>";
+
+  }
 }
-echo $comment;
-echo $cover;
+
+
+}
+
+
+$result = mysqli_query($link, "SELECT Rating,Comment,bookcover FROM book
+LEFT JOIN review ON book.bookid = review.bookid
+where book.bookid=$bookcode");
+
+
+
+while($res = mysqli_fetch_assoc($result))
+
+{
+   // echo $rating = $res['Rating'];
+   //echo $comment = $res['Comment'];
+   //$comment = $res['Comment'];
+   $cover = $res['bookcover'];
+
+}
+
 
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -25,7 +63,7 @@ echo $cover;
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="css/bookdetails.css">
+   <link rel="stylesheet" href="css/bookdetails.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900|Ubuntu&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
@@ -92,14 +130,23 @@ echo $cover;
   <section id="reviews">
     <div class="row">
       <h4>Reviews</h4>
-
-      
-
     </div>
-    <p><?php echo $comment ?></p>
-  </section>
 
+  <p>
+  <?php
 
+  $result = mysqli_query($link, "SELECT Rating,Comment,bookcover FROM book
+  LEFT JOIN review ON book.bookid = review.bookid
+  where book.bookid=$bookcode");
+
+  while($res = mysqli_fetch_assoc($result))
+  //while($res = $result->fetch_assoc())
+  {
+    echo $res['Rating'] . ' ' . $res['Comment'] . "<br>";
+  }
+
+  ?> </p>
+</section>
     <!-- Footer -->
 
     <footer id="footer">
