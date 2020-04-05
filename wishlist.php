@@ -15,13 +15,13 @@
                         class="button" value="Create"/>
             </fieldset>
         </form>
-            <h1>Your Wishlist</h1>
+            <!--<h1>Your Wishlist</h1>
             <ul id="wishlistHead">
                 <li>Book</li>
                 <li>Quantity</li>
                 <li>Remove</li>
                 <li>Add To Shopping Cart</li>
-            </ul>
+            </ul>-->
             <?php showWishlist() ?>
         <?php
             $wishlist = " ";
@@ -42,14 +42,28 @@
                 include 'db_connection.php';
                 $conn = openCon();
 
-                $sql = "SELECT BookID, Quantity FROM wishlist";
+                $sql = "SELECT wishlist.BookID, Quantity, booktitle FROM wishlist
+                        JOIN book ON wishlist.BookID=book.BookID
+                        WHERE UserID=1";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
+                    echo "<table border='1' cellpadding='10'>";
+                    echo "<tr>
+                        <th>quantity</th>
+                        <th>Book Title</th>
+                        <th>Remove</th>
+                        </tr>";
                 // output data of each row
                     while($row = mysqli_fetch_assoc($result)) {
-                        echo "<p class='data'> BookID: " . $row["BookID"] . " Quantity: " . $row["Quantity"].  "<br>", "</p>";
+                        //echo "<p class='data'> BookID: " . $row["BookID"] . " Quantity: " . $row["Quantity"] . "<br>", "</p>";
+                        echo "</tr>";
+                        echo "<td>" . $row["Quantity"] . "</td>";
+                        echo "<td>" . $row["booktitle"] . "</td>";
+                        echo "<td><a href='Remove.php?BookID=" . $row['BookID'] . "'>Delete</a></td>";                        
+                        echo "</tr>";
                     }
+                    echo "</table>";
                 } else {
                 echo "0 results";
                 }
@@ -73,7 +87,7 @@
                 include 'db_connection.php';
                 $conn = OpenCon();
 
-                $sql = "DELETE FROM wishlist WHERE id=1";
+                $sql = "DELETE FROM wishlist WHERE UserID=1";
 
                 if ($conn->query($sql) === TRUE) {
                     echo "Record deleted successfully";
