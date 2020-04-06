@@ -1,11 +1,3 @@
-
-
-<form method="POST">
-   <input type="submit" name="hihi" title="Add to Cart" placeholder="Add to Cart"> <!-- Add Cart</button> -->
-</form>
-
-
-
 <?php
 // including database connection
 require 'init.php';
@@ -108,8 +100,9 @@ while($res = mysqli_fetch_array($result))
     <div class="row">
       <div class="col-lg-6">
         <h1><?php echo $BookTitle; ?></h1>
+        <!-- INCASE YOU WANT TO CHANGE THE SIZE OF THE BOOK COVER IN BOOK DETAILS PAGE ADD: width="" height="" attributes in img tag-->
         <img class="img-responsive img-thumbnail" src="images/<?php echo $cover; ?>">
-      </div>
+       </div>
       <div class="col-lg-6">
         <p class = "bookdetails" "author-name">Author: <?php echo $AuthorName; ?></p>
         <p class = "bookdetails" "publisher-name">Publisher: <?php echo $PublisherName; ?></p>
@@ -125,6 +118,11 @@ while($res = mysqli_fetch_array($result))
     </div>
   </section>
 
+
+<!-- Add to Cart Button -->
+<form method="POST">
+     <input type="submit" name="hihi" title="Add to Cart" value="Add to Cart"> <!-- Add Cart</button> -->
+  </form>
 
   <!-- Features -->
 
