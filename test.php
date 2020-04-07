@@ -5,6 +5,7 @@ include 'header.php';
 
 
 
+
 if(isset($_GET['page'])){
     // if get page number through url and check it is a valid number
     $page_num = filter_var($_GET['page'], FILTER_VALIDATE_INT,[
@@ -23,15 +24,16 @@ $page_limit = 10;
 // Set Offset
 $page_offset = $page_limit * ($page_num - 1);
 
-function showPosts($conn, $current_page_num, $page_limit, $page_offset){   
+function showPosts($link, $current_page_num, $page_limit, $page_offset){   
       
 
         if(isset($_POST['data'])){
-		$query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY bookid LIMIT $page_limit OFFSET $page_offset");
+		
+        $query = mysqli_query($link,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY price LIMIT $page_limit OFFSET $page_offset");
         }
         else{
     	// query of fetching posts
-    	$query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY price LIMIT $page_limit OFFSET $page_offset");
+    	$query = mysqli_query($link,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY bookid LIMIT $page_limit OFFSET $page_offset");
 		}
     
     // check database is not empty
@@ -45,7 +47,7 @@ function showPosts($conn, $current_page_num, $page_limit, $page_offset){
         }
         
         // total number of posts
-        $total_posts = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM book"));
+        $total_posts = mysqli_num_rows(mysqli_query($link,"SELECT * FROM book"));
         
         // total number of pages
         $total_page = ceil($total_posts / $page_limit);
@@ -61,21 +63,21 @@ function showPosts($conn, $current_page_num, $page_limit, $page_offset){
        echo "<li>";
         //showing prev button and check current page number is greater than 1
         if($current_page_num > 1){
-           echo '<a href="?page='.$prev_page.'" class="page_conn">Prev</a>';
+           echo '<a href="?page='.$prev_page.'" class="page_link">Prev</a>';
         }
         // show all number of pages
         for($i = 1; $i <= $total_page; $i++){
             //highlight the current page number
             if($i == $current_page_num){
-                echo '<a href="?page='.$i.'" class="page_conn active_page">'.$i.'</a>';
+                echo '<a href="?page='.$i.'" class="page_link active_page">'.$i.'</a>';
             }else{
-                echo '<a href="?page='.$i.'" class="page_conn">'.$i.'</a>';
+                echo '<a href="?page='.$i.'" class="page_link">'.$i.'</a>';
             }
             
         }
         // showing next button and check this is last page
         if($total_page+1 != $next_page){
-           echo '<a href="?page='.$next_page.'" class="page_conn">Next</a>';
+           echo '<a href="?page='.$next_page.'" class="page_link">Next</a>';
         }
         
         echo "</li>";  
@@ -94,7 +96,7 @@ function showPosts($conn, $current_page_num, $page_limit, $page_offset){
             margin: 0;
             font-family: sans-serif;
         }
-        .page_conn{
+        .page_link{
             display: inline-block;
             color: #222;
             border: 1px solid #ddd;
@@ -189,13 +191,13 @@ function showPosts($conn, $current_page_num, $page_limit, $page_offset){
 <body>
    <h1 style="text-align:center;">Geek Text</h1>
    <form method="POST" action="test.php">
-        <input type="submit" name="data" value="1"/>
+        <input type="submit" name="data" value="Sort by Price"/>
     </form>
     <div class="container">
         <ul class="posts">
 <?php 
 // call showPosts function 
-showPosts($conn, $page_num, $page_limit, $page_offset);
+showPosts($link, $page_num, $page_limit, $page_offset);
 ?>   
         </ul>
     </div> 

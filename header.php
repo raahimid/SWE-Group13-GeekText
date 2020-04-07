@@ -28,17 +28,19 @@
     <ul class="nav navbar-nav navbar-right">
 
     <?php
+    
 				session_start();
 				if(!isset($_SESSION['username'])){
 					echo'<li><a href="./shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-						 <li><a href="./create_account.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-						 <li><a href="./sign_in.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+						 <li><a href="./signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						 <li><a href="./login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
 				}	
 				else{
 					
-					$id = $_SESSION['username'];
-					$link = mysqli_connect("localhost", "root", "", "geek_text");
-					$sql = "SELECT SUM(quantity) AS sum FROM cart WHERE user_id ='$id'";
+					$id = $_SESSION['ID'];
+					$name = $_SESSION['name'];
+					$link = mysqli_connect("localhost", "root", "tgif580jr", "geek_text");
+					$sql = "SELECT SUM(quantity) AS sum FROM cart WHERE userid ='$id'";
 					$result1 = mysqli_query($link, $sql);
 					$count1=mysqli_num_rows($result1);
 					$row1=mysqli_fetch_array($result1);		
@@ -49,8 +51,8 @@
 						$headerCartItem = 0;
 					}			
 					
-					echo'<li><a href="./shopping_cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - '.$headerCartItem.' item(s)</a></li>
-					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="./account.php">'.$_SESSION['username']. '<span class="caret"></span></a>
+					echo'<li><a href="./shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - '.$headerCartItem.' item(s)</a></li>
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="./account.php">'.$_SESSION['name']. '<span class="caret"></span></a>
 	        				<ul class="dropdown-menu">
 		          				<li><a href="./account.php">Account</a></li>
 		         			    <li><a href="logout.php">Sign Out</a></li>
