@@ -1,5 +1,5 @@
 <?php
-    function OpenCon() {
+    function openCon() {
         $dbhost = "localhost";
         $dbuser = "root";
         $dbpass = "";
