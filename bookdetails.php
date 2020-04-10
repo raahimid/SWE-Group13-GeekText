@@ -63,7 +63,7 @@ while($res = mysqli_fetch_array($result))
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"> 
    
    <!--rating css -->
-  <link rel="stylesheet" href="css/rating.css">
+  <link rel="stylesheet" href="rating.css">
 </head>
 
 <body>
@@ -158,7 +158,12 @@ while($res = mysqli_fetch_array($result))
   LEFT JOIN review ON book.bookid = review.bookid
   where book.bookid=$bookcode");
 
-  
+   /* QUERY FOR ALL USERNAMES IF USER IS NOT SIGNED IN - LEONXL - AL */
+   $resultForUserName = mysqli_query($link, "SELECT `Rating`, `Comment`, `UserFirst` FROM `user` 
+   LEFT JOIN review ON user.UserID = review.UserID");
+   while($res=mysqli_fetch_assoc($resultForUserName)){
+        $ForUserName=$res['UserFirst'];
+   }
 
 
 /*QUERY FOR BOOKS, USED TO VERIFY IF PERSON BOUGHT THE BOOK - LEONXL - AL */
@@ -177,7 +182,7 @@ echo "<h4>Reviews</h4>";
 
 /*LOGIC: if customer bought the book, give option to comment - LEONXL - AL */
 echo "<div class='entire-commentsection'>";
-if($purchasedFlag == $isPurchased){  
+if($purchasedFlag == $isPurchased && $id){  
 
   echo "<form method ='POST'>";
   echo "<div class='rating'>";
@@ -228,25 +233,34 @@ echo "<meta http-equiv='refresh' content='0'>"; //REFRESH WHEN SUBMIT COMMENT BU
 echo "<div class='displayed-rating'>";
 echo "<hr class='rating-border'>"; 
 /* FETCHING COMMENTS AND STAR RATING AMOUNT TO DISPLAY - LEONXL - AL */
+
+if(mysqli_num_rows($result) > 0){
+
 while($res = mysqli_fetch_assoc($result)){
-   
+$commentcheck = $res['Comment']; //IT MUST HAVE A COMMENT TO DISPLAY ANYTHING
 $staramount = $res['Rating']; //RETURNS THE AMOUNT OF STARS - LEONXL - AL 
-  
+$username = $res[''];
+
  for($x = 0; $x<$staramount;$x++){ //LOGIC: IF $x (is less than) $staramount(example:3) Result: Print 3 stars - LEONXL - AL  
   echo "<span class='fa fa-star checked'></span>"; //ECHO THE STAR IMAGE - LEONXL - AL 
   } 
    
   $userId = $res['UserId'];
-  if($userId == NULL){
+  if($userId == NULL && $commentcheck){
       echo "<br>" . '<strong>Anonymous</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>";
       echo "<hr class='rating-border'>";  
     }
-   else{
+   elseif($userId == $id && $commentcheck){
     echo "<br>" .'<strong>' . $name . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL 
     echo "<hr class='rating-border'>";
-  } 
+  } else{
+    echo "<br>" .'<strong>' . $ForUserName . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL
+    echo "<hr class='rating-border'>";
+  }
   
     
+} 
+
 }
 echo "</div>";
 ?>  

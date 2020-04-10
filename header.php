@@ -51,13 +51,15 @@
 						$headerCartItem = 0;
 					}			
 					
-					echo'<li><a href="./shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - '.$headerCartItem.' item(s)</a></li>
+					echo'
+					<li><a href="./shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - '.$headerCartItem.' item(s)</a></li>
 					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="./account.php">'.$_SESSION['name']. '<span class="caret"></span></a>
 	        				<ul class="dropdown-menu">
 		          				<li><a href="./account.php">Account</a></li>
 		         			    <li><a href="logout.php">Sign Out</a></li>
 	        				</ul>
-     					</li>';
+						 </li>
+				    <li><a href="library.php">Library</a></li>';
 				}
     ?>
 
