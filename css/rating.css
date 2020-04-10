@@ -1,0 +1,146 @@
+  /* hr.rating-border{
+    position: relative;
+    border: 1px solid #0002;
+    width: 200px; */
+    /* margin: 20px auto; 
+    margin: 20px;
+    
+} */
+
+.rating-border{
+    display: block;
+    width: 200px;
+    height: 1px;
+    background: #0005;
+    /* margin: 20px auto; */
+    margin:20px;
+} 
+
+.displayed-rating{
+    margin: 20px auto; 
+    margin-left: 35px;
+}
+
+.entire-commentsection{
+    margin-left: 20px; 
+}
+
+.postAs{
+    margin-left:20px;
+    margin-top:10px;
+}
+
+.rating{
+    margin-bottom:10px;
+   /* transform: translate(-50%,-50%) rotateY(180deg); */
+   /* display: block; flex*/
+}
+
+
+.rating{
+    position: static; /* absolute */
+    /* top: 50%; */
+    left: 5%;  /*50%*/
+    /* right:50%; DELETE */
+   transform: translate(-50%,-50%) rotateY(180deg);
+   display: inline-flex; /*flex*/
+   margin-left: 70px; /*THIS SHIFT ENTIRE 5 STAR RATING TO THE LEFT*/
+} 
+
+/*.rating*/ 
+ input[type=radio]{  /*added [type=radio] */
+  display: none; 
+}
+
+.rating label {
+    /* margin-left: 1px;*/ /*this spreads out each individual star*/
+    display: block;
+    cursor: pointer;
+    width: 20px; /*25px*/
+    color: #101010;
+}
+
+.rating label:before
+{
+    content: '\f005';
+    font-family: fontAwesome; 
+    position: absolute; 
+    display: block;
+    font-size: 20px; /*25px*/
+    color: #101010
+}
+
+.rating label:after
+{
+    content: '\f005';
+   font-family: fontAwesome; 
+    position: absolute; 
+    display: block;
+    font-size: 20px; /*25px*/
+    color:  yellow;  /* #1f9cff; */
+    top: 0;
+    opacity: 0;
+    transition: .1s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5); 
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after
+{
+   opacity: 1;
+}
+
+
+/****** FOR COMMENT SECTION *****/
+
+/*
+label[for="Comment"] {
+    display: block; block 
+    margin-bottom: 0px; 
+    margin-left:20px; Might Delete
+    font-size: 18px; 1em
+}  */
+
+ textarea[name="Comment"] {
+  /*  font-family:'Courier New', Courier, monospace; */
+    font-size: 1em;
+    word-spacing: 1px;
+}
+
+textarea[name="Comment"] {
+ /* position: inherit; DELETE */
+ /* right:100px; DELETE */
+ display: flex; /*Might Delete*/
+ padding: 10px; /*10px*/
+ line-height: 1;
+ border-radius: 5px;
+ border: 1px solid #ccc;
+ box-shadow: 1px 1px 1px #999;  
+ margin-bottom: 0px; /*10px*/
+ margin-top: 5px; /*Might Delete*/ /*20*/
+ margin-left: 20px; /*Might Delete*/
+}
+
+button[value='submit'] { /*Change this to a button*/
+    border: none;
+    font-weight: bold;
+    margin-top:0px;
+    padding:0px; 
+    font-size: 14px; 
+    /* font-family: 'Courier New', Courier, monospace; */
+    display: block; 
+    margin-left:22px; /*might delete*/
+} 
+
+
+
+button[value='submit']:hover { /*change this to button*/
+ border: #000;
+ color:blue;font-size: 14px;
+ font-family: 'Courier New', Courier, monospace; 
+}
+
+td {
+    display: relative; 
+}

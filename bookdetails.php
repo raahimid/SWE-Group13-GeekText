@@ -1,7 +1,7 @@
 <?php
 // including database connection
-require 'init.php';
-//include 'config.php';
+//require 'init.php';
+include 'config.php';
 include 'header.php';
 
 $bookcode = $_GET['bookid'];
@@ -63,8 +63,7 @@ while($res = mysqli_fetch_array($result))
    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"> 
    
    <!--rating css -->
-   <link rel="stylesheet" href="css/cmmtrating.css"> 
-
+  <link rel="stylesheet" href="css/rating.css">
 </head>
 
 <body>
@@ -162,8 +161,6 @@ while($res = mysqli_fetch_array($result))
   
 
 
-
-
 /*QUERY FOR BOOKS, USED TO VERIFY IF PERSON BOUGHT THE BOOK - LEONXL - AL */
 $resultPurchased = mysqli_query($link, "SELECT UserId, purchased.BookId, isPurchased, purchaseID FROM purchased 
 LEFT JOIN book ON purchased.bookid = book.bookId WHERE purchased.bookId = $bookcode;");
@@ -179,6 +176,7 @@ $purchasedFlag = 1; /*FLAG USED TO COMPARE AGAINST isPurchased Column.
 echo "<h4>Reviews</h4>";
 
 /*LOGIC: if customer bought the book, give option to comment - LEONXL - AL */
+echo "<div class='entire-commentsection'>";
 if($purchasedFlag == $isPurchased){  
 
   echo "<form method ='POST'>";
@@ -196,18 +194,21 @@ if($purchasedFlag == $isPurchased){
   echo "</div>";
 
   /* DROPDOWN FOR POSTING ANONYMOUS OR NICKNAME */
+  echo "<div class='postAs'>";
   echo "<select id='postAs' name='postAs' required>";
   echo "<option value='' disabled selected>Post as:</option>";
   echo  "<option value='Anonymous'>Anonymous</option>";
   echo  "<option value='$name'> $name </option>";
   echo "</select>" . "<br>";
+  echo "</div>";
 
   /* TEXT AREA TO LEAVE A COMMENT */
   echo   "<textarea id='Comment' name='Comment' rows='10' cols='60' required Placeholder='Leave a comment...'></textarea>" . "<br>";
-  echo   "<button>Submit</button>";
+  echo   "<button value='submit'>Submit</button>";
   echo "</form>";
   
-}
+} 
+echo "</div>";
 
 
 
@@ -224,26 +225,30 @@ echo "<meta http-equiv='refresh' content='0'>"; //REFRESH WHEN SUBMIT COMMENT BU
   echo "<meta http-equiv='refresh' content='0'>"; //REFRESH WHEN SUBMIT COMMENT BUTTON IS CLICKED
 }
 
-
+echo "<div class='displayed-rating'>";
+echo "<hr class='rating-border'>"; 
 /* FETCHING COMMENTS AND STAR RATING AMOUNT TO DISPLAY - LEONXL - AL */
 while($res = mysqli_fetch_assoc($result)){
-
+   
 $staramount = $res['Rating']; //RETURNS THE AMOUNT OF STARS - LEONXL - AL 
-
-  for($x = 0; $x<$staramount;$x++){ //LOGIC: IF $x (is less than) $staramount(example:3) Result: Print 3 stars - LEONXL - AL 
+  
+ for($x = 0; $x<$staramount;$x++){ //LOGIC: IF $x (is less than) $staramount(example:3) Result: Print 3 stars - LEONXL - AL  
   echo "<span class='fa fa-star checked'></span>"; //ECHO THE STAR IMAGE - LEONXL - AL 
-    }
+  } 
    
   $userId = $res['UserId'];
   if($userId == NULL){
-      echo "<br>" . 'Anonymous' . ' ' . $res['Comment'] . "<br>";
+      echo "<br>" . '<strong>Anonymous</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>";
+      echo "<hr class='rating-border'>";  
     }
    else{
-    echo "<br>" . $name . ' ' . $res['Comment'] . "<br>"; //SHOWS COMMENTS - LEONXL - AL 
-   }
+    echo "<br>" .'<strong>' . $name . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL 
+    echo "<hr class='rating-border'>";
+  } 
+  
     
 }
-
+echo "</div>";
 ?>  
 
 
