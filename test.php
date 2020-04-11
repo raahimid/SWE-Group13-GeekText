@@ -24,16 +24,32 @@ $page_limit = 10;
 // Set Offset
 $page_offset = $page_limit * ($page_num - 1);
 
-function showPosts($link, $current_page_num, $page_limit, $page_offset){   
+function showPosts($conn, $current_page_num, $page_limit, $page_offset){   
       
 
         if(isset($_POST['data'])){
 		
-        $query = mysqli_query($link,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY price LIMIT $page_limit OFFSET $page_offset");
+        $query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY price LIMIT $page_limit OFFSET $page_offset");
+        }
+        else if(isset($_POST['Author'])){
+        
+        $query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating, authorname FROM book JOIN author on book.authorid = author.authorid order by authorname LIMIT $page_limit OFFSET $page_offset");
+        }
+        else if(isset($_POST['title'])){
+        
+        $query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY booktitle LIMIT $page_limit OFFSET $page_offset");
+        }
+         else if(isset($_POST['rating'])){
+        
+        $query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY bookrating desc LIMIT $page_limit OFFSET $page_offset");
+        }
+        else if(isset($_POST['date'])){
+        
+        $query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY releasedate LIMIT $page_limit OFFSET $page_offset");
         }
         else{
     	// query of fetching posts
-    	$query = mysqli_query($link,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY bookid LIMIT $page_limit OFFSET $page_offset");
+    	$query = mysqli_query($conn,"SELECT booktitle, price, bookid, bookcover, bookrating FROM book ORDER BY bookid LIMIT $page_limit OFFSET $page_offset");
 		}
     
     // check database is not empty
@@ -47,7 +63,7 @@ function showPosts($link, $current_page_num, $page_limit, $page_offset){
         }
         
         // total number of posts
-        $total_posts = mysqli_num_rows(mysqli_query($link,"SELECT * FROM book"));
+        $total_posts = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM book"));
         
         // total number of pages
         $total_page = ceil($total_posts / $page_limit);
@@ -190,14 +206,18 @@ function showPosts($link, $current_page_num, $page_limit, $page_offset){
 
 <body>
    <h1 style="text-align:center;">Geek Text</h1>
-   <form method="POST" action="test.php">
-        <input type="submit" name="data" value="Sort by Price"/>
+   <form method="POST" action="test.php" align="center">
+        <input type="submit" name="data" class="btn btn-default" value="Sort by Price" />
+        <input type="submit" name="author" class="btn btn-default" value="Sort by Author"/>
+        <input type="submit" name="title" class="btn btn-default" value="Sort by Title"/>
+        <input type="submit" name="rating" class="btn btn-default" value="Sort by Book Rating"/>
+        <input type="submit" name="date" class="btn btn-default" value="Sort by Release Date"/>
     </form>
     <div class="container">
         <ul class="posts">
 <?php 
 // call showPosts function 
-showPosts($link, $page_num, $page_limit, $page_offset);
+showPosts($conn, $page_num, $page_limit, $page_offset);
 ?>   
         </ul>
     </div> 

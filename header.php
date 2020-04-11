@@ -19,7 +19,7 @@
         <ul class="dropdown-menu">
 		  <li><a href="./test.php">All</a></li>
           <li><a href="book_genre.php">Genre</a></li>
-          <li><a href="book_best_seller.php"> By Best Selling</a></li>
+          <li><a href="best_selling.php"> By Best Selling</a></li>
           <li><a href="book_rating.php">Rating</a></li>
 
         </ul>
@@ -39,7 +39,7 @@
 					
 					$id = $_SESSION['ID'];
 					$name = $_SESSION['name'];
-					$link = mysqli_connect("localhost", "root", "tgif580jr", "geek_text");
+					$link = mysqli_connect("localhost", "root", "", "geek_text");
 					$sql = "SELECT SUM(quantity) AS sum FROM cart WHERE userid ='$id'";
 					$result1 = mysqli_query($link, $sql);
 					$count1=mysqli_num_rows($result1);
@@ -59,7 +59,8 @@
 		         			    <li><a href="logout.php">Sign Out</a></li>
 	        				</ul>
 						 </li>
-				    <li><a href="library.php">Library</a></li>';
+				    <li><a href="library.php">Library</a></li>
+				    <li><a href="./wishlist.php"><span class="glyphicon glyphicon-log-in"></span> Wishlist</a></li>';
 				}
     ?>
 

@@ -16,8 +16,8 @@
             </fieldset>
         </form>
         <?php 
-        include_once 'db_connection.php';
-        $conn = openCon();
+        include_once 'init.php';
+        //$conn = openCon();
 
         $localNames = array();
         $localNames = getWishlistName();
@@ -71,7 +71,7 @@
         *   as a parameter.
         */
         function getWishlistName() {
-            $conn = openCon();
+            //$conn = openCon();
             $sql = "SELECT DISTINCT WishlistName
                     FROM wishlist
                     WHERE userid=1

@@ -7,11 +7,11 @@
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form 
       
-      $myusername = mysqli_real_escape_string($link,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($link,$_POST['password']); 
+      $myusername = mysqli_real_escape_string($conn,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($conn,$_POST['password']); 
       
       $sql = "SELECT userid,userpassword,userfirst FROM user WHERE email = '$myusername' and userpassword = '$mypassword'";
-      $result = mysqli_query($link,$sql);
+      $result = mysqli_query($conn,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       
       
