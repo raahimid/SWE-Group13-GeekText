@@ -1,9 +1,10 @@
 <html>
 <head>
 <title>E-Commerce Website </title>
-<link rel="stylesheet" href="style.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </head>
@@ -50,59 +51,48 @@
 	<td>	 <input type="text" name="username" value =""><br></td></tr>
 </tr>
 </table>
-<a href="password.php">Change Your password</a>
+<a href="password/password.php">Change Your password</a>
 
 <h4>       </h4>
 
 
 <h4>Personal Information</h4>
 <table border="0" cellspacing="50">
-<tr>
-  <td>First Name</td>
-  <td><input type="text" name="first"><br></td>
-</tr>
+	<tr>
+	  <td>First Name</td>
+	  <td><input type="text" name="first"><br></td>
+	</tr>
 
-<tr>
-	<td>Middle Name</td> 
-	<td>	 <input type="text" name="mid" value =""><br></td></tr>
-</tr>
+	<tr>
+		<td>Middle Name</td> 
+		<td>	 <input type="text" name="mid" value =""><br></td></tr>
+	</tr>
 
-<tr>
-	<td>Last Name</td> 
-	<td>	 <input type="text" name="last"><br></td></tr>
-</tr>
-<tr>
-	<td>Cell Phone</td> 
-	<td>	 <input type="num" name="phone"><br></td></tr>
-</tr>
-<tr>
-	<td>Email</td> 
-	<td>	 <input type="text" name="email"><br></td></tr>
-</tr>
-</table>
+	<tr>
+		<td>Last Name</td> 
+		<td>	 <input type="text" name="last"><br></td></tr>
+	</tr>
+	<tr>
+		<td>Cell Phone</td> 
+		<td>	 <input type="num" name="phone"><br></td></tr>
+	</tr>
+	<tr>
+		<td>Email</td> 
+		<td>	 <input type="text" name="email"><br></td></tr>
+	</tr>
+	</table>
+	<a href="address/addresses.php">Change Your Mailing information</a>
+
 <h4>       </h4>
 
 
-  <h4>Shipping Information</h4>
-<table border="0" cellspacing="50">
-<tr>
-  <td>Street Address 1</td>
-  <td><input type="number" name="address1"><br></td>
-</tr>
+ 
 
-<tr>
-	<td>Street Address 2</td> 
-	<td>	 <input type="text" name="address2" value =""><br></td></tr>
-</tr>
-<tr>
-	<td>Username(The name for logging in)</td> 
-	<td>	 <input type="text" name="3" value =""><br></td></tr>
-</tr>
-</table>
-
- <input type="submit" name="test" id="test" value="RUN" /><br/>
+<h4>       </h4>
+ <input type="submit" name="test" id="test" value="Save" /><br/>
 
 </form>
+
 
 <?php
 function write($link)
