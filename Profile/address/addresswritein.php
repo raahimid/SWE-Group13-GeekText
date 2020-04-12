@@ -9,7 +9,7 @@
    City='".  $_POST["city"] . "',City2='".  $_POST["city2"] . "',City3='".  $_POST["city3"] . "',
    state='".  $_POST["state"] . "',state2='".  $_POST["state2"] . "',state3='".  $_POST["state3"] . "',
    ZipCode='".  $_POST["zip"] . "',Zipcode2='".  $_POST["zip2"] . "',Zipcode3='".  $_POST["zip3"] . "'
-   WHERE UserID= " . $_SESSION["id"] . "";
+   WHERE UserID= " . $_SESSION["ID"] . "";
    mysqli_query($link,$sql);
   
 

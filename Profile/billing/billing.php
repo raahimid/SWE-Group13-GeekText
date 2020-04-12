@@ -10,14 +10,14 @@
 <?php
    include("header.php");
 
-	$sql = "SELECT * FROM shipping where UserID=" . $_SESSION["id"] . "  ";
+	$sql = "SELECT * FROM billing where UserID=" . $_SESSION["ID"] . "  ";
 	$result = $link->query($sql);
 	while($row = mysqli_fetch_assoc($result))
-		{$card1=$row['CCNumber'];
+		{$card=$row['CCNumber'];
 		$card2=	$row['CCNumber2'];
 		$card3=	$row['CCNumber3'];
 
-		$first=	$row['FirstName'];
+		$first=		$row['FirstName'];
 		$first2=	$row['FirstName2'];
 		$first3=	$row['FirstName3'];
 
@@ -25,13 +25,13 @@
 		$last2= $row['LastName2'];
 		$last3= $row['LastName3'];
 
-		$state= $row['State'];
-		$state2= $row['State2'];
-		$state3= $row['State3'];
+		$cvv= $row['CVV'];
+		$cvv2= $row['CVV2'];
+		$cvv3= $row['CVV3'];
 
-		$zip= $row['ZipCode'];
-		$zip2= $row['Zipcode2'];
-		$zip3= $row['Zipcode3'];
+		$expdate= $row['ExpDate'];
+		$expdate2= $row['ExpDate2'];
+		$expdate3= $row['ExpDate3'];
 
 		
 		
@@ -40,30 +40,30 @@
   <center>
 
  <h4>Shipping Information</h4>
- <form action="addresswritein.php" method="post">
+ <form action="billwritein.php" method="post">
 
 	<table border="0" cellspacing="50">
 		<tr>
-		  <td>Street Address 1</td>
-		  <td><input type="text" name="ccard" id="ccard" value='<?php echo $address1 ?>'><br></td>
+		  <td>Card Number</td>
+		  <td><input type="number" name="ccard" id="ccard" value='<?php echo $card ?>'><br></td>
 		</tr>
 
 		
 		<tr>
-			<td>Apt</td> 
-			<td>	 <input type="text" name="apt" value ='<?php echo $apt ?>'><br></td></tr>
+			<td>First Name</td> 
+			<td>	 <input type="text" name="first" value ='<?php echo $first ?>'><br></td></tr>
 		</tr>
 		<tr>
-			<td>City</td> 
-			<td>	 <input type="text" name="city" value ='<?php echo $city ?>'><br></td></tr>
+			<td>Last Name</td> 
+			<td>	 <input type="text" name="last" value ='<?php echo $last ?>'><br></td></tr>
 		</tr>
 		<tr>
-			<td>State</td> 
-			<td>	 <input type="text" name="state" value ='<?php echo $state ?>'><br></td></tr>
+			<td>CVV </td> 
+			<td>	 <input type="number" name="cvv" value ='<?php echo $cvv ?>'><br></td></tr>
 		</tr>
 		<tr>
-			<td>Zipcode</td> 
-			<td>	 <input type="text" name="zip" value ='<?php echo $zip ?>'><br></td></tr>
+			<td>Expiration Date</td> 
+			<td>	 <input type="date" name="exp" value ='<?php echo $expdate ?>'><br></td></tr>
 		</tr>
 		
 	
@@ -81,30 +81,31 @@
 				</div>
 				<div id="collapseOne" class="panel-collapse collapse in">
 					<div class="panel-body">
-											<table border="0" cellspacing="50">
+							<table border="0" cellspacing="50">
 								<tr>
-									  <td>Street Address 1</td>
-									  <td><input type="number" name="ccard2" id="address" value=''><br></td>
-									</tr>
+								  <td>Card Number</td>
+								  <td><input type="number" name="ccard2" id="ccard2" value='<?php echo $card2 ?>'><br></td>
+								</tr>
 
 		
-									<tr>
-										<td>Apt</td> 
-										<td>	 <input type="text" name="apt2" value ='<?php echo $apt2 ?>'><br></td></tr>
-									</tr>
-									<tr>
-										<td>City</td> 
-										<td>	 <input type="text" name="city2" value ='<?php echo $city2 ?>'><br></td></tr>
-									</tr>
-									<tr>
-										<td>State</td> 
-										<td>	 <input type="text" name="state2" value ='<?php echo $state2 ?>'><br></td></tr>
-									</tr>
-									<tr>
-										<td>Zipcode</td> 
-										<td>	 <input type="text" name="zip2" value ='<?php echo $zip2 ?>'><br></td></tr>
-		</tr>
-					
+								<tr>
+									<td>First Name</td> 
+									<td>	 <input type="text" name="first2" value ='<?php echo $first2 ?>'><br></td></tr>
+								</tr>
+								<tr>
+									<td>Last Name</td> 
+									<td>	 <input type="text" name="last2" value ='<?php echo $last2 ?>'><br></td></tr>
+								</tr>
+								<tr>
+									<td>CVV </td> 
+									<td>	 <input type="number" name="cvv2" value ='<?php echo $cvv2 ?>'><br></td></tr>
+								</tr>
+								<tr>
+									<td>Expiration Date</td> 
+									<td>	 <input type="date" name="exp2" value ='<?php echo $expdate2 ?>'><br></td></tr>
+								</tr>
+		
+	
 						</table>
 						<div class="panel panel-default">
 				<div class="panel-heading">
@@ -118,31 +119,31 @@
 				<div id="collapseTwo" class="panel-collapse collapse">
 				<div class="panel-body">
             					<div class="panel-body">
-											<table border="0" cellspacing="50">
+								<table border="0" cellspacing="50">
 								<tr>
-								  <td>Street Address </td>
-								  <td><input type="text" name="address3" id="address" value='<?php echo $address3 ?>'><br></td>
+								  <td>Card Number</td>
+								  <td><input type="number" name="ccard3" id="ccard3" value='<?php echo $card3 ?>'><br></td>
 								</tr>
 
 		
 								<tr>
-									<td>Apt</td> 
-									<td>	 <input type="text" name="apt3" value ='<?php echo $apt3 ?>'><br></td></tr>
+									<td>First Name</td> 
+									<td>	 <input type="text" name="first3" value ='<?php echo $firs3 ?>'><br></td></tr>
 								</tr>
 								<tr>
-									<td>City</td> 
-									<td>	 <input type="text" name="city3" value ='<?php echo $city3 ?>'><br></td></tr>
+									<td>Last Name</td> 
+									<td>	 <input type="text" name="last3" value ='<?php echo $last3 ?>'><br></td></tr>
 								</tr>
 								<tr>
-									<td>State</td> 
-									<td>	 <input type="text" name="state3" value ='<?php echo $state3 ?>'><br></td></tr>
+									<td>CVV </td> 
+									<td>	 <input type="number" name="cvv3" value ='<?php echo $cvv3 ?>'><br></td></tr>
 								</tr>
 								<tr>
-									<td>Zipcode</td> 
-									<td>	 <input type="text" name="zip3" value ='<?php echo $zip3 ?>'><br></td></tr>
+									<td>Expiration Date</td> 
+									<td>	 <input type="date" name="exp3" value ='<?php echo $expdate3 ?>'><br></td></tr>
 								</tr>
-							
-					
+		
+	
 						</table>
 				</div>
 				</div>

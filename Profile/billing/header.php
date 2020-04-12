@@ -41,7 +41,7 @@
 		
 		{
 		
-					$_SESSION['id']=$row['UserID'];
+					$_SESSION['ID']=$row['UserID'];
 					}
 				if($_SESSION['islogin']!=1){
 					echo'<li><a href="../../shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
@@ -50,7 +50,7 @@
 				}	
 				else{
 					
-				$id = $_SESSION['id'];
+				$id = $_SESSION['ID'];
 					$sql = "SELECT SUM(quantity) AS sum FROM cart WHERE userid ='$id'";
 					$result1 = mysqli_query($link, $sql);
 					$count1=mysqli_num_rows($result1);

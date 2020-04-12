@@ -1,15 +1,16 @@
 <?php
    include("../header.php");
 
+   
 
+   $sql = "UPDATE billing SET 
+   CCNumber='".  $_POST["ccard"] . "',CCNumber2 ='".  $_POST["ccard2"] . "',CCNumber3 ='".  $_POST["address3"] . "', 
+   FirstName='".  $_POST["first"] . "',   FirstName2='".  $_POST["first2"] . "',   FirstName='".  $_POST["first2"] . "',
+   LastName='".  $_POST["last"] . "',   LastName2='".  $_POST["last2"] . "',   LastName3='".  $_POST["last3"] . "',
+   CVV='".  $_POST["cvv"] . "',CVV2='".  $_POST["cvv2"] . "',CVV3='".  $_POST["cvv3"] . "',
+   ExpDate='".  $_POST["exp"] . "',   ExpDate2='".  $_POST["exp2"] . "',   ExpDate3='".  $_POST["exp3"] . "'
 
-   $sql = "UPDATE shipping SET 
-   Street_Address_1='".  $_POST["address"] . "',Street_Address_2 ='".  $_POST["address2"] . "',Street_Address_3 ='".  $_POST["address3"] . "', 
-   Apt= '".  $_POST["apt"] . "',Apt2= '".  $_POST["apt2"] . "',Apt3= '".  $_POST["apt3"] . "',
-   City='".  $_POST["city"] . "',City2='".  $_POST["city2"] . "',City3='".  $_POST["city3"] . "',
-   state='".  $_POST["state"] . "',state2='".  $_POST["state2"] . "',state3='".  $_POST["state3"] . "',
-   ZipCode='".  $_POST["zip"] . "',Zipcode2='".  $_POST["zip2"] . "',Zipcode3='".  $_POST["zip3"] . "'
-   WHERE UserID= " . $_SESSION["id"] . "";
+   WHERE UserID= " . $_SESSION["ID"] . "";
    mysqli_query($link,$sql);
   
 

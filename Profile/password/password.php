@@ -42,7 +42,7 @@ function write($link)
 {
 $password = isset($_POST['password1'])?$_POST['password1']:"";
 $hash = password_hash($password, PASSWORD_DEFAULT);
-   $sql = "UPDATE user SET PassWord='$hash' WHERE UserID= " . $_SESSION["id"] . "";
+   $sql = "UPDATE user SET PassWord='$hash' WHERE UserID= " . $_SESSION["ID"] . "";
   if ($link->query($sql) === TRUE) {
  } else {
    echo "Error: " . $sql . "<br>" . $link->error;

@@ -10,7 +10,7 @@
 <?php
    include("header.php");
 
-	$sql = "SELECT * FROM shipping where UserID=" . $_SESSION["id"] . "  ";
+	$sql = "SELECT * FROM shipping where UserID=" . $_SESSION["ID"] . "  ";
 	$result = $link->query($sql);
 	while($row = mysqli_fetch_assoc($result))
 		{$address1=	$row['Street_Address_1'];
