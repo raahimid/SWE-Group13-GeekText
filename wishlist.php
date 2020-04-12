@@ -3,27 +3,29 @@
     <head>
         <title>Your Wishlist</title>
         <meta charset = "UTF-8" />
-        <link rel="stylesheet" type="text/css" href="wishlist.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <form method="POST" action="wishlist.php" autocomplete="off">
-            <fieldset>
-                <legend>Create A Wishlist</legend>
-                <input type="text" name="textBox"
-                        class="text" minlength="1" maxlength="18"/>
-                <input type="submit" name="createBtn"
-                        class="button" value="Create"/>
-            </fieldset>
-        </form>
-        
-
         <?php
         ob_start(); 
         include_once 'db_connection.php';
+        include 'header.php';
         $conn = openCon();
 
+        $id= $_SESSION['ID'];
+
+        echo "<form method='POST' action='wishlist.php' autocomplete='off'>
+                <fieldset>
+                    <legend>Create A Wishlist</legend>
+                        <input type='text' name='textBox'
+                            class='text' minlength='1' maxlength='18'/>
+                        <input type='submit' name='createBtn'
+                             class='button' value='Create'/>
+                </fieldset>
+                </form>";
+
         $localNames = array();
-        $localNames = getWishlistName();
+        $localNames = getWishlistName($id);
 
         $number = count($localNames);
         if(isset($_POST['createBtn'])) { 
@@ -37,18 +39,18 @@
                 header("Location:wishlist.php");
             }
         }
-            
+  
         /*
         *   User types into textbox chosen wishlist name
         *   that name gets stored into a variable $wishlistName
         *   which is then used as a parameter in the helper function
         *   to create an "empty" wishlist.
         */
-        function createWishlist() {
+        function createWishlist($id) {
             $wishlistName =" ";
             if(isset($_POST['textBox'])) {
                 $wishlistName = $_POST['textBox'];
-                createWishlistHelper($wishlistName);
+                createWishlistHelper($wishlistName, $id);
             }
             return $wishlistName;
         }
@@ -57,11 +59,11 @@
         *   This function inserts an empty value into the database to simulate
         *   an empty wishlist when its created by createWishlist().
         */
-        function createWishlistHelper($wishlistName) {
+        function createWishlistHelper($wishlistName, $id) {
             $conn = openCon();
 
             $sql = "INSERT INTO wishlist (UserID, BookID, quantity, WishlistName)
-                    VALUES (1, 0, 0, '$wishlistName')";
+                    VALUES ($id, 0, 0, '$wishlistName')";
 
             if ($conn->query($sql) === TRUE) {
                 echo "New record created successfully";
@@ -77,11 +79,11 @@
         *   The while loop goes through those names and gives them to showWishlist()
         *   as a parameter.
         */
-        function getWishlistName() {
+        function getWishlistName($id) {
             $conn = openCon();
             $sql = "SELECT DISTINCT WishlistName
                     FROM wishlist
-                    WHERE userid=1
+                    WHERE userid= $id
                     ORDER BY 1 DESC";
             $result = mysqli_query($conn, $sql);
 
@@ -89,20 +91,20 @@
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     $names[] = $row['WishlistName'];
-                    showWishlist($row['WishlistName']);
+                    showWishlist($row['WishlistName'], $id);
                 }
             }
             return $names;
         }
 
-        function showWishlistHelper($nameOfWishlist)
+        function showWishlistHelper($nameOfWishlist, $id)
         {
             $conn = openCon();
             $result = " ";
             $sql = "SELECT DISTINCT WishlistName 
                     FROM Wishlist 
                     WHERE WishlistName != '$nameOfWishlist'
-                    AND userid=1";
+                    AND userid=$id";
 
             $result = mysqli_query($conn, $sql);
 
@@ -119,17 +121,17 @@
         *   Dynamically shows wishlist data by iterating through each wishlistname
         *   in the wishlist table.
         */
-        function showWishlist($nameOfWishlist) {
+        function showWishlist($nameOfWishlist, $id) {
             $conn = openCon();
             $result = " ";
 
             $sql = "SELECT wishlist.BookID, quantity, BookTitle, WishlistName FROM wishlist
                     JOIN book ON wishlist.BookID=book.BookID
-                    WHERE UserID=1
+                    WHERE UserID=$id
                     AND wishlistname='$nameOfWishlist'";
             $result = mysqli_query($conn, $sql);
 
-            $otherWishlists = showWishlistHelper($nameOfWishlist);
+            $otherWishlists = showWishlistHelper($nameOfWishlist, $id);
 
             for ($index = 0; $index < 3; $index++) {
                 if (!isset($otherWishlists[$index])) {
@@ -205,13 +207,13 @@
             }
         }
 
-        function addToCart($bookID, $quantity) {
+        function addToCart($bookID, $quantity, $id) {
             $conn = openCon();
             $bookID = $_GET['BookID'];
             $quantity = $_GET['quantity'];
 
             $sql = "INSERT INTO cart (UserID, BookID, quantity)
-                    VALUES (1, $bookID, $quantity)";
+                    VALUES ($id, $bookID, $quantity)";
 
             removeFromWishlist($bookID);
 

@@ -2,11 +2,12 @@
 ob_start();
 include_once "db_connection.php";
 include "wishlist.php";
+include "header.php";
 
-$id = $_GET['BookID'];
+$bookID = $_GET['BookID'];
 $quantity = $_GET['quantity'];
 
-addToCart($id, $quantity);
+addToCart($bookID, $quantity, $id);
 
 header("Location:wishlist.php");
 ob_end_flush();
