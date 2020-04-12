@@ -15,18 +15,12 @@
                         class="button" value="Create"/>
             </fieldset>
         </form>
-<<<<<<< HEAD
         
 
         <?php
         ob_start(); 
         include_once 'db_connection.php';
         $conn = openCon();
-=======
-        <?php 
-        include_once 'init.php';
-        //$conn = openCon();
->>>>>>> be76764f42564b6dd2010113dfe6eaebd4825ca0
 
         $localNames = array();
         $localNames = getWishlistName();
@@ -84,7 +78,7 @@
         *   as a parameter.
         */
         function getWishlistName() {
-            //$conn = openCon();
+            $conn = openCon();
             $sql = "SELECT DISTINCT WishlistName
                     FROM wishlist
                     WHERE userid=1
