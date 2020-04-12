@@ -154,9 +154,21 @@ while($res = mysqli_fetch_array($result))
   <?php
 
   /* FETCH THE BOOKS - LEONXL - AL */
-  $result = mysqli_query($link, "SELECT Rating, Comment, bookcover, UserId FROM book
+  $result = mysqli_query($link, "SELECT Rating, Comment, bookcover, UserId, ReviewNickname FROM book
   LEFT JOIN review ON book.bookid = review.bookid
   where book.bookid=$bookcode");
+
+
+ /* QUERY TO GET NICKNAMES IF USER IS NOT SIGNED IN - LEONXL - AL */
+ $resultForReviewNickname = mysqli_query($link, "SELECT `Rating`, `Comment`, `UserFirst`, `ReviewNickname`  FROM `review` 
+ LEFT JOIN user ON review.UserID = user.UserID");
+ 
+  while($res=mysqli_fetch_assoc($resultForReviewNickname)){
+      // $ReviewNickname = $res['ReviewNickname']; 
+  }    
+
+ 
+
 
    /* QUERY FOR ALL USERNAMES IF USER IS NOT SIGNED IN - LEONXL - AL */
    $resultForUserName = mysqli_query($link, "SELECT `Rating`, `Comment`, `UserFirst` FROM `user` 
@@ -201,9 +213,9 @@ if($purchasedFlag == $isPurchased && $id){
   /* DROPDOWN FOR POSTING ANONYMOUS OR NICKNAME */
   echo "<div class='postAs'>";
   echo "<select id='postAs' name='postAs' required>";
-  echo "<option value='' disabled selected>Post as:</option>";
+  echo "<option value='$name'>$name</option>";
+  echo  "<option value='$nickname'>$nickname</option>";
   echo  "<option value='Anonymous'>Anonymous</option>";
-  echo  "<option value='$name'> $name </option>";
   echo "</select>" . "<br>";
   echo "</div>";
 
@@ -223,12 +235,15 @@ $Comment = mysqli_real_escape_string($link, $_POST['Comment']); //SUPERGLOBAL - 
 
 //INSERT COMMENT INTO DATABASE - LEONXL - AL 
 if(isset($_POST['postAs']) && $_POST['postAs'] == 'Anonymous'){
-$sql = mysqli_query($link,"INSERT INTO `review` (`Comment`,`Rating`,`bookId`) VALUES ('$Comment','$Rating','$bookcode');");//USING BOOKCODE DECLARED AT TOP OF FILE - LEONXL - AL 
+$sql = mysqli_query($link,"INSERT INTO `review` (`Comment`,`Rating`,`bookId`,`ReviewNickname`) VALUES ('$Comment','$Rating','$bookcode','None');");//USING BOOKCODE DECLARED AT TOP OF FILE - LEONXL - AL 
 echo "<meta http-equiv='refresh' content='0'>"; //REFRESH WHEN SUBMIT COMMENT BUTTON IS CLICKED
 } elseif (isset($_POST['postAs']) && $_POST['postAs'] == $name){
-  $sql = mysqli_query($link,"INSERT INTO `review` (`Comment`,`Rating`,`bookId`,`UserID`) VALUES ('$Comment','$Rating','$bookcode','$id');");
+  $sql = mysqli_query($link,"INSERT INTO `review` (`Comment`,`Rating`,`bookId`,`UserID`,`ReviewNickname`) VALUES ('$Comment','$Rating','$bookcode','$id','None');");
   echo "<meta http-equiv='refresh' content='0'>"; //REFRESH WHEN SUBMIT COMMENT BUTTON IS CLICKED
-}
+}elseif(isset($_POST['postAs']) && $_POST['postAs'] == $nickname){
+  $sql = mysqli_query($link,"INSERT INTO `review` (`Comment`,`Rating`,`bookId`,`UserID`,`ReviewNickname`) VALUES ('$Comment','$Rating','$bookcode','$id','$nickname');");
+  echo "<meta http-equiv='refresh' content='0'>"; //REFRESH WHEN SUBMIT COMMENT BUTTON IS CLICKED
+} 
 
 echo "<div class='displayed-rating'>";
 echo "<hr class='rating-border'>"; 
@@ -239,26 +254,33 @@ if(mysqli_num_rows($result) > 0){
 while($res = mysqli_fetch_assoc($result)){
 $commentcheck = $res['Comment']; //IT MUST HAVE A COMMENT TO DISPLAY ANYTHING
 $staramount = $res['Rating']; //RETURNS THE AMOUNT OF STARS - LEONXL - AL 
-$username = $res[''];
+$ReviewNickname = $res['ReviewNickname']; 
+
 
  for($x = 0; $x<$staramount;$x++){ //LOGIC: IF $x (is less than) $staramount(example:3) Result: Print 3 stars - LEONXL - AL  
   echo "<span class='fa fa-star checked'></span>"; //ECHO THE STAR IMAGE - LEONXL - AL 
   } 
    
   $userId = $res['UserId'];
-  if($userId == NULL && $commentcheck){
+  if($userId == NULL && $commentcheck && $ReviewNickname == 'None'){
       echo "<br>" . '<strong>Anonymous</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>";
       echo "<hr class='rating-border'>";  
     }
-   elseif($userId == $id && $commentcheck){
+   elseif($userId == $id && $commentcheck && $ReviewNickname == 'None'){
     echo "<br>" .'<strong>' . $name . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL 
     echo "<hr class='rating-border'>";
-  } else{
+  } elseif($userId == $id && $commentcheck && $ReviewNickname == $nickname){
+    echo "<br>" .'<strong>' . $ReviewNickname . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL 
+    echo "<hr class='rating-border'>";
+  } elseif($userId != $id && $commentcheck && $ReviewNickname != 'None'){
+    echo "<br>" .'<strong>' . $ReviewNickname . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL
+    echo "<hr class='rating-border'>";
+  }  elseif($userId != NULL && $commentcheck && $ReviewNickname == 'None'){
     echo "<br>" .'<strong>' . $ForUserName . '</strong>' . ' ' . wordwrap($res['Comment'],50,"<br>\n",True) . "<br>"; //SHOWS COMMENTS - LEONXL - AL
     echo "<hr class='rating-border'>";
   }
   
-    
+
 } 
 
 }
