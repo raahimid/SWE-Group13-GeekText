@@ -15,20 +15,27 @@
                         class="button" value="Create"/>
             </fieldset>
         </form>
-        <?php 
+        
+
+        <?php
+        ob_start(); 
         include_once 'db_connection.php';
         $conn = openCon();
 
         $localNames = array();
         $localNames = getWishlistName();
 
-        
-        print_r($localNames);
-
-        $wishlist = " ";
-        if(isset($_POST['createBtn'])) {
-            createWishlist();
-            header("Location:wishlist.php");
+        $number = count($localNames);
+        if(isset($_POST['createBtn'])) { 
+            if ($number > 3)
+            {
+                echo "<h1>You already have three wishlists created!</h1>";
+                header("Location:wishlist.php"); 
+            }
+            else {
+                createWishlist();
+                header("Location:wishlist.php");
+            }
         }
             
         /*
@@ -53,7 +60,7 @@
         function createWishlistHelper($wishlistName) {
             $conn = openCon();
 
-            $sql = "INSERT INTO wishlist (UserID, BookID, Quantity, WishlistName)
+            $sql = "INSERT INTO wishlist (UserID, BookID, quantity, WishlistName)
                     VALUES (1, 0, 0, '$wishlistName')";
 
             if ($conn->query($sql) === TRUE) {
@@ -116,7 +123,7 @@
             $conn = openCon();
             $result = " ";
 
-            $sql = "SELECT wishlist.BookID, Quantity, BookTitle, WishlistName FROM wishlist
+            $sql = "SELECT wishlist.BookID, quantity, BookTitle, WishlistName FROM wishlist
                     JOIN book ON wishlist.BookID=book.BookID
                     WHERE UserID=1
                     AND wishlistname='$nameOfWishlist'";
@@ -124,32 +131,60 @@
 
             $otherWishlists = showWishlistHelper($nameOfWishlist);
 
-            echo "<h3>$nameOfWishlist</h3>";
+            for ($index = 0; $index < 3; $index++) {
+                if (!isset($otherWishlists[$index])) {
+                    $otherWishlists[$index] = "Empty";
+                }
+            }
+
+            echo "<h3>$nameOfWishlist</h3>"; 
             if (mysqli_num_rows($result) > 0) {
-                
                 echo "<table border='1' cellpadding='10'>";
                 echo "<tr>
                         <th>Book Title</th>
                         <th>Quantity</th>
                         <th>Remove</th>
-                        <th>Move To Wishlist</th>
-                        <th>Move To Wishlist</th>
-                        <th>Move To Wishlist</th>
+                        <th>Move To A Wishlist</th>
+                        <th>Add To Cart</th>
                       </tr>";
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
-                    echo "</tr>";
+                    echo "<tr>";
                     echo "<td>" . $row['BookTitle'] . "</td>";
-                    echo "<td>" . $row['Quantity'] . "</td>";
-                    echo "<td><a href='Remove.php?BookID=" . $row['BookID'] . "'>Delete</td>";
-                    echo "<td><a href='MoveTo.php?BookID=" . $row['BookID'] . "&WishlistName=" . $otherWishlists[0] . "'>Move</td>";
-                    echo "<td><a href='MoveTo.php?BookID=" . $row['BookID'] . "&WishlistName=" . $otherWishlists[1] . "'>Move</td>";    
-                    echo "<td><a href='MoveTo.php?BookID=" . $row['BookID'] . "&WishlistName=" . $otherWishlists[2] . "'>Move</td>";                                          
+                    echo "<td><form action='QuantityUpdate.php?BookID=" . $row['BookID'] . "&WishlistName=" . $nameOfWishlist ."' method='POST'>
+                                <input type='number' name='amount' class='quantity' min='1' max='99' 
+                                        value='" . $row['quantity']. "' autocomplete='off'</td>
+                            </form>";
+                    echo "<td><a href='Remove.php?BookID=" . $row['BookID'] . "'>Delete</a></td>";
+                    echo "<td><select onchange='location=this.value'>
+                            <option>Choose a Wishlist</option>
+                            <option value='MoveTo.php?BookID=" . $row['BookID'] . "&WishlistName=" . $otherWishlists[0] . "'>$otherWishlists[0]</option>
+                            <option value='MoveTo.php?BookID=" . $row['BookID'] . "&WishlistName=" . $otherWishlists[1] . "'>$otherWishlists[1]</option>
+                            <option value='MoveTo.php?BookID=" . $row['BookID'] . "&WishlistName=" . $otherWishlists[2] . "'>$otherWishlists[2]</option>
+                         </select></td>";
+                    echo "<td><center><a href='AddToCart.php?BookID=" . $row['BookID'] . "&quantity=" . $row['quantity'] . "'>Add</a></center></td>";                                        
                     echo "</tr>";
                 }
                 echo "</table>";
             } else {
             echo "Add Books To Your Wishlist!";
+            }
+            return $otherWishlists;
+        }
+
+        function updateQuantity($bookId, $nameOfList, $amount) {
+            $conn = openCon();
+            $bookID = $_GET['BookID'];
+
+            $sql = "UPDATE wishlist
+                    SET quantity= $amount
+                    WHERE wishlistname= '$nameOfList'
+                    AND bookid = $bookID";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "quantity Changed";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
             }
         }
         
@@ -164,12 +199,44 @@
                     AND bookid = $bookID";
 
             if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully";
+                echo "Book Moved";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
         }
+
+        function addToCart($bookID, $quantity) {
+            $conn = openCon();
+            $bookID = $_GET['BookID'];
+            $quantity = $_GET['quantity'];
+
+            $sql = "INSERT INTO cart (UserID, BookID, quantity)
+                    VALUES (1, $bookID, $quantity)";
+
+            removeFromWishlist($bookID);
+
+            if ($conn->query($sql) === TRUE) {
+                echo "Success";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        }
+
+        function removeFromWishlist($bookID) {
+            $conn = openCon();
+            $bookID = $_GET['BookID'];
+            
+            $sql = "DELETE FROM wishlist where BookID='$bookID'";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "Removed";
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        }
+
         CloseCon($conn);
+        ob_end_flush();
         ?>
     </body>
 </html>

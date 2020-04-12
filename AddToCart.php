@@ -4,9 +4,9 @@ include_once "db_connection.php";
 include "wishlist.php";
 
 $id = $_GET['BookID'];
-$nameForList = $_GET['WishlistName'];
+$quantity = $_GET['quantity'];
 
-updateWishlist($id, $nameForList);
+addToCart($id, $quantity);
 
 header("Location:wishlist.php");
 ob_end_flush();
