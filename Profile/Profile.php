@@ -1,87 +1,107 @@
 <html>
 <head>
-<title>E-Commerce Website </title>
-<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Books</title>
 </head>
 <body>
-<div class="top-nav-bar">
-<div class="search-box">
-<img src="images/geektext.png" class="logo">
-<input type="text" class="form-control" style= "width:600px; height:40px;"/>
 
-<span class="input-group-text"style= "width:60px; height:40px;"/><i class="fa fa-search"/></i></span>
-</div> 
-<div class="menu-bar"/>  
-	<ul>
-		
-			<li><a href="#"><i class="fa fa-shopping-basket"></i>cart</a></li>
-			<li><a href="#">User Name</a></li>
-			<li><a href="#">Sign Out</a></li>
-		
-	</ul>
-</div> 
-</div>
+
 <?php
-    include 'init.php';
+	// DB connection?
+	include("header.php");
+;
+
+	// Get the list of all genres in DB
+	
+?>
+
+
+<!-- div for the genres navigation bar? -->
+
+<!--  ********** Heading section*********** -->
+<div class="container" >
+  <h2>Account Infromation</h2>
+ 
+<title>E-Commerce Website </title>
+
+</head>
+<body>
+
+<?php
+		$username=$_SESSION['username'];
+		
+		$sql="SELECT * FROM user WHERE UserName= '$username'";
+		$result = $link->query($sql);
+
+		while($row = mysqli_fetch_assoc($result)){
+		
+		$_SESSION['id']=$row['UserID'];
+		$_SESSION['first']=$row['UserFirst'];
+		$_SESSION['mid']=$row['UserMiddle'];
+		$_SESSION['last']=$row['UserLast'];
+		$_SESSION['email']=$row['Email'];
+		$_SESSION['nick']=$row['Nickname'];
+		$_SESSION['phone']=$row['Phone'];}
+		if($_SESSION['islogin']!==1)
+		{
+		        header("Location:login/loginpage.php");
+
+		}
     #include 'header.php';
   $query = "SELECT * FROM User,shipping ";
   $result = mysqli_query($link, $query);
 ?>
 
 
-<h4>Account Information</h4>
-<form method="post">
-<table border="0" cellspacing="50">
+<form method="post"style="line-height:26px"/>
+<table border="0" cellspacing="100">
 <tr>
-  <td>UserID</td>
-  <td><input type="number" name="id"><br></td>
+  <td><font size="5" >UserID</td>
+  <td><font size="5" ><?php echo $_SESSION['id'] ?><br></td>
 </tr>
 
 <tr>
-	<td>Nickname(The name shows to others)</td> 
-	<td>	 <input type="text" name="nickname" value =""><br></td></tr>
+	<td><font size="4" >Nickname(The name shows to others)</td> 
+	<td><font size="4" ><input type="text" name="nickname" value ='<?php echo $_SESSION['nick'] ?>'><br></td></tr>
 </tr>
 <tr>
-	<td>Username(The name for logging in)</td> 
-	<td>	 <input type="text" name="username" value =""><br></td></tr>
+	<td><font size="4" >Username(The name for logging in)</td> 
+	<td><font size="4" ><input type="text" name="username" value ='<?php echo $_SESSION['username'] ?>'><br></td></tr>
 </tr>
 </table>
-<a href="password/password.php">Change Your password</a>
+<a href="password/password.php"	>Change Your password</a>
 
 <h4>       </h4>
 
 
-<h4>Personal Information</h4>
-<table border="0" cellspacing="50">
+  <h2>Personal Infromation</h2>
+<table border="0" cellspacing="100">
 	<tr>
-	  <td>First Name</td>
-	  <td><input type="text" name="first"><br></td>
+	  <td><font size="4" >First Name</td>
+	  <td><font size="4" ><input type="text" name="first" value ='<?php echo $_SESSION['first'] ?>'><br></td>
 	</tr>
 
 	<tr>
-		<td>Middle Name</td> 
-		<td>	 <input type="text" name="mid" value =""><br></td></tr>
+		<td><font size="4" >Middle Name</td> 
+		<td>	<font size="4" > <input type="text" name="mid" value ='<?php echo $_SESSION['mid'] ?>'><br></td></tr>
 	</tr>
 
 	<tr>
-		<td>Last Name</td> 
-		<td>	 <input type="text" name="last"><br></td></tr>
+		<td><font size="4" >Last Name</td> 
+		<td>	<font size="4" > <input type="text" name="last" value ='<?php echo $_SESSION['last'] ?>'><br></td></tr>
 	</tr>
 	<tr>
-		<td>Cell Phone</td> 
-		<td>	 <input type="num" name="phone"><br></td></tr>
+		<td><font size="4" >Cell Phone</td> 
+		<td>	<font size="4" > <input type="num" name="phone" value ='<?php echo $_SESSION['phone'] ?>'><br></td></tr>
 	</tr>
 	<tr>
-		<td>Email</td> 
-		<td>	 <input type="text" name="email"><br></td></tr>
+		<td><font size="4" >Email</td> 
+		<td>	<font size="4" > <input type="text" name="email" value ='<?php echo $_SESSION['email'] ?>'><br></td></tr>
 	</tr>
 	</table>
-	<a href="address/addresses.php">Change Your Mailing information</a>
+	<a href="address/addresses.php" >Change Your Mailing information</a>
 
 <h4>       </h4>
 
@@ -95,12 +115,15 @@
 
 
 <?php
+
 function write($link)
-{
+{ 
    echo "Your information is saved" ;
-   $sql = "UPDATE user SET UserFirst='".  $_POST["first"] . "',  UserLast='".  $_POST["last"] . "', UserMiddle='".  $_POST["mid"] . "',Email = '".  $_POST["email"] . "',Nickname = '".  $_POST["nickname"] . "', Username='".  $_POST["username"] . "', Phone='".  $_POST["phone"] . "' WHERE UserID=" . $_POST["id"] . "";
+   $sql = "UPDATE user SET UserFirst='".  $_POST["first"] . "',  UserLast='".  $_POST["last"] . "', UserMiddle='".  $_POST["mid"] . "',Email = '".  $_POST["email"] . "',Nickname = '".  $_POST["nickname"] . "', Username='".  $_POST["username"] . "', Phone='".  $_POST["phone"] . "' WHERE UserID=" . $_SESSION["id"] . "";
   if ($link->query($sql) === TRUE) {
-     echo "New record created successfully";
+	 echo "<script>alert('New record created successfully')</script>";
+	 header('refresh:3; url=Profile.php');
+
  } else {
    echo "Error: " . $sql . "<br>" . $link->error;
 } }

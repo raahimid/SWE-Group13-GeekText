@@ -5,7 +5,7 @@
 <meta name="content-type"; charset="UTF-8">
 </head>
 <?php
-    include '../init.php';
+   include("header.php");
 ?>
 <body>
     <div class="content" align="center">
@@ -60,6 +60,8 @@
                                     break;
                                     case 3:
                                     echo "sign up successful";
+									case 4:
+                                    echo "Password length has to be at least 8";
                                     break;
                                 }
                             ?>
@@ -73,7 +75,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            If you already had an account, go <a href="login.php">login</a>
+                            If you already had an account, go <a href="../login/loginpage.php"	>login</a>
                         </td>
                     </tr>
                 </table>

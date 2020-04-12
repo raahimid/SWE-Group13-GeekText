@@ -1,5 +1,5 @@
 <?php
-	    include '../init.php';
+   include("../header.php");
 
 
 
@@ -9,11 +9,12 @@
    City='".  $_POST["city"] . "',City2='".  $_POST["city2"] . "',City3='".  $_POST["city3"] . "',
    state='".  $_POST["state"] . "',state2='".  $_POST["state2"] . "',state3='".  $_POST["state3"] . "',
    ZipCode='".  $_POST["zip"] . "',Zipcode2='".  $_POST["zip2"] . "',Zipcode3='".  $_POST["zip3"] . "'
-   WHERE UserID= 58";
+   WHERE UserID= " . $_SESSION["id"] . "";
    mysqli_query($link,$sql);
   
 
-   header("Location:addresses.php");
-   $flag=1;
-
+ 
+   echo "<script>alert('saved')</script>";
+header('refresh:2; url=../Profile.php');
+      
  ?>
