@@ -34,8 +34,8 @@
        
       if(isset($_GET['wishlist'])  && $_GET['wishlist'] == $bookcode){
         $resultwish = mysqli_query($conn, "INSERT INTO `wishlist` (`UserId`,`BookId`,`quantity`,`WishlistName`) VALUES ('$id','$bookcode','1','Wishlist');");
-      }
-      if(isset($_GET['hihi'])  && $_GET['hihi'] == $bookcode){ 
+    }
+      elseif(isset($_GET['hihi'])  && $_GET['hihi'] == $bookcode){ 
         $result = mysqli_query($conn, "INSERT INTO `cart` (`UserId`,`BookId`,`quantity`) VALUES ('$id','$bookcode','1')");
     }
     /***********@AL - LEONXL*************/

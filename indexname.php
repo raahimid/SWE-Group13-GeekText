@@ -1,6 +1,6 @@
 
 <?php
-    include 'init.php';
+    include 'config.php';
     include 'header.php';
      $query = 'SELECT Book.bookid, Book.booktitle, Book.price, Book.bookcover, Book.bookrating FROM Book';
     $result = mysqli_query($link, $query);

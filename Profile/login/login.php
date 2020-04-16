@@ -20,6 +20,10 @@
 		} elseif(password_verify($password,$row['PassWord'] )){
 				$_SESSION['username'] = $username;
 				$_SESSION['islogin'] = 1;
+         $_SESSION['name'] = $row['UserFirst'];//users first name
+         $_SESSION['ID'] = $row['UserID'];
+          $_SESSION['Nickname'] = $row['NickName'];
+		$_SESSION['password'] = $mypassword;//password
 
 		
 				setcookie('username', $username, time()+20*60);

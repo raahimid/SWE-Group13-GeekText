@@ -17,7 +17,7 @@
 		$card2=	$row['CCNumber2'];
 		$card3=	$row['CCNumber3'];
 
-		$first=		$row['FirstName'];
+		$first1=		$row['FirstName'];
 		$first2=	$row['FirstName2'];
 		$first3=	$row['FirstName3'];
 
@@ -29,11 +29,14 @@
 		$cvv2= $row['CVV2'];
 		$cvv3= $row['CVV3'];
 
-		$expdate= $row['ExpDate'];
-		$expdate2= $row['ExpDate2'];
-		$expdate3= $row['ExpDate3'];
+		$year= $row['ExpYear'];
+		$year2= $row['ExpYear2'];
+		$year3= $row['ExpYear3'];
 
-		
+		$month= $row['ExpMonth'];
+		$month2= $row['ExpMonth2'];
+		$month3= $row['ExpMonth3'];
+
 		
 		}
  ?>
@@ -51,7 +54,7 @@
 		
 		<tr>
 			<td>First Name</td> 
-			<td>	 <input type="text" name="first" value ='<?php echo $first ?>'><br></td></tr>
+			<td>	 <input type="text" name="first" value ='<?php echo $first1 ?>'><br></td></tr>
 		</tr>
 		<tr>
 			<td>Last Name</td> 
@@ -62,8 +65,15 @@
 			<td>	 <input type="number" name="cvv" value ='<?php echo $cvv ?>'><br></td></tr>
 		</tr>
 		<tr>
-			<td>Expiration Date</td> 
-			<td>	 <input type="date" name="exp" value ='<?php echo $expdate ?>'><br></td></tr>
+			<td>Expiration Date(month/year)</td> 
+			<td>
+
+			<input type="number" name="month" value ='<?php echo $month ?>' oninput="if(value.length>2)value=value.slice(0,2);if(value>12)value=12" />
+
+			<input type="number" name="year" value ='<?php echo $year ?>' oninput="if(value.length>4)value=value.slice(0,4)"/>
+
+
+<br></td></tr>
 		</tr>
 		
 	
@@ -101,8 +111,12 @@
 									<td>	 <input type="number" name="cvv2" value ='<?php echo $cvv2 ?>'><br></td></tr>
 								</tr>
 								<tr>
-									<td>Expiration Date</td> 
-									<td>	 <input type="date" name="exp2" value ='<?php echo $expdate2 ?>'><br></td></tr>
+										<td>Expiration Date(month/year)</td> 
+			<td>
+			 <input type="number" name="month2" value ='<?php echo $month2 ?>' oninput="if(value.length>2)value=value.slice(0,2);if(value>12)value=12" />
+
+			<input type="number" name="year2" value ='<?php echo $year2 ?>' oninput="if(value.length>4)value=value.slice(0,4)"/>
+<br></td></tr>
 								</tr>
 		
 	
@@ -128,7 +142,7 @@
 		
 								<tr>
 									<td>First Name</td> 
-									<td>	 <input type="text" name="first3" value ='<?php echo $firs3 ?>'><br></td></tr>
+									<td>	 <input type="text" name="first3" value ='<?php echo $first3 ?>'><br></td></tr>
 								</tr>
 								<tr>
 									<td>Last Name</td> 
@@ -139,8 +153,12 @@
 									<td>	 <input type="number" name="cvv3" value ='<?php echo $cvv3 ?>'><br></td></tr>
 								</tr>
 								<tr>
-									<td>Expiration Date</td> 
-									<td>	 <input type="date" name="exp3" value ='<?php echo $expdate3 ?>'><br></td></tr>
+										<td>Expiration Date(month/year)</td> 
+			<td>
+			 <input type="number" name="month3" value ='<?php echo $month3 ?>' oninput="if(value.length>2)value=value.slice(0,2);if(value>12)value=12" />
+
+			<input type="number" name="year3" value ='<?php echo $year3 ?>' oninput="if(value.length>4)value=value.slice(0,4)"/>
+<br></td></tr>
 								</tr>
 		
 	

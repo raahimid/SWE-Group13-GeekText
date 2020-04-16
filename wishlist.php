@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+
         <?php
         ob_start(); 
         include_once 'db_connection.php';
@@ -22,7 +23,7 @@
                         <input type='submit' name='createBtn'
                              class='button' value='Create'/>
                 </fieldset>
-                </form>";
+                </form>"; 
 
         $localNames = array();
         $localNames = getWishlistName($id);
@@ -35,7 +36,7 @@
                 header("Location:wishlist.php"); 
             }
             else {
-                createWishlist();
+                createWishlist($id);
                 header("Location:wishlist.php");
             }
         }

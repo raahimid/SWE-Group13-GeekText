@@ -19,7 +19,7 @@
         <ul class="dropdown-menu">
 		  <li><a href="./test.php">All</a></li>
           <li><a href="book_genre.php">Genre</a></li>
-          <li><a href="best_selling.php"> By Best Selling</a></li>
+          <li><a href="book_best_seller.php"> By Best Selling</a></li>
           <li><a href="book_rating.php">Rating</a></li>
 
         </ul>
@@ -32,14 +32,15 @@
 				session_start();
 				if(!isset($_SESSION['username'])){
 					echo'<li><a href="./shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-						 <li><a href="./signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-						 <li><a href="./login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+						 <li><a href="Profile/sign up/sign up.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+						 <li><a href="Profile/login/loginpage.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
 				}	
 				else{
 					
 					$id = $_SESSION['ID'];
 					$name = $_SESSION['name'];
-					$link = mysqli_connect("localhost", "root", "", "geek_text");
+					$nickname = $_SESSION['Nickname'];
+					$link = mysqli_connect("localhost:3306", "root", "", "bookdb");
 					$sql = "SELECT SUM(quantity) AS sum FROM cart WHERE userid ='$id'";
 					$result1 = mysqli_query($link, $sql);
 					$count1=mysqli_num_rows($result1);
@@ -49,24 +50,26 @@
 					}
 					else {
 						$headerCartItem = 0;
-					}			
+					}	
 					
-					echo'
-					<li><a href="./shopingcart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - '.$headerCartItem.' item(s)</a></li>
-					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="./account.php">'.$_SESSION['name']. '<span class="caret"></span></a>
+					
+					echo '
+					<li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - '.$headerCartItem.' item(s)</a></li>
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="./account.php">'. $name . '<span class="caret"></span></a>
 	        				<ul class="dropdown-menu">
-		          				<li><a href="./account.php">Account</a></li>
+		          				<li><a href="Profile/Profile.php">Account</a></li>
 		         			    <li><a href="logout.php">Sign Out</a></li>
-	        				</ul>
+							</ul>   
 						 </li>
-				    <li><a href="library.php">Library</a></li>
-				    <li><a href="./wishlist.php"><span class="glyphicon glyphicon-log-in"></span> Wishlist</a></li>';
+					<li><a href="library.php">Library</a></li>
+					<li><a href="./wishlist.php"><span class="glyphicon glyphicon-log-in"></span> Wishlist</a>';
+					
 				}
     ?>
-
+     
      <li style="float:right;">
         <a style="display:block; color:white; text-align:center; padding:15px 25px; text-decoration:none;" href="./shopping_cart.php"></a>
-     </li>	
+	 </li>	
     </ul>
   </div>
 </nav>

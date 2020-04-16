@@ -30,7 +30,7 @@
 				define('DB_SERVER', 'localhost');
 				define('DB_USERNAME', 'root');
 				define('DB_PASSWORD', '');
-				define('DB_NAME', 'book store');
+				define('DB_NAME', 'bookdb');
  				$username = $_SESSION['username'];	
 
 				/* Attempt to connect to MySQL database */

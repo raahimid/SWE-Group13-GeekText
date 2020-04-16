@@ -1,5 +1,5 @@
-<a href="index.php">Back</a>                                                                                               
-<a href="addbook.php">Add New Record</a>
+<a href="test.php">Back</a>                                                                                               
+<!-- <a href="">Add New Record</a> -->
 <?php
 // connect to the database
 include('init.php');

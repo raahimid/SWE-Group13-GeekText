@@ -1,16 +1,17 @@
 <?php
 // including database connection
 //require 'init.php';
-include 'init.php';
+//include 'init.php';
+include 'config.php';
 include 'header.php';
 
 // $bookcode = $_GET['bookid'];
 $AuthorID = $_GET['AuthorID'];
 
-$result = mysqli_query($conn, "select AuthorName, AuthorBio, AuthorImage
+$result = mysqli_query($link, "select AuthorName, AuthorBio, AuthorImage
 from author where AuthorID=$AuthorID");
 
-// $result = mysqli_query($conn, "SELECT DISTINCT BookTitle, BookCover from author
+// $result = mysqli_query($link, "SELECT DISTINCT BookTitle, BookCover from author
 // JOIN book ON author.AuthorID = book.AuthorID
 // where author.AuthorID = $AuthorID");
 

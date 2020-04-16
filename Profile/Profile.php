@@ -30,6 +30,11 @@
 <body>
 
 <?php
+	if($_SESSION['islogin']!==1)
+		{
+		        header("Location:login/loginpage.php");
+
+		}
 		$username=$_SESSION['username'];
 		
 		$sql="SELECT * FROM user WHERE UserName= '$username'";
@@ -44,11 +49,7 @@
 		$_SESSION['email']=$row['Email'];
 		$_SESSION['nick']=$row['Nickname'];
 		$_SESSION['phone']=$row['Phone'];}
-		if($_SESSION['islogin']!==1)
-		{
-		        header("Location:login/loginpage.php");
-
-		}
+		
     #include 'header.php';
   $query = "SELECT * FROM User,shipping ";
   $result = mysqli_query($link, $query);

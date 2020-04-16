@@ -1,56 +1,69 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: geek_text
--- ------------------------------------------------------
--- Server version	5.7.28-log
+-- Host: 127.0.0.1
+-- Generation Time: Apr 14, 2020 at 08:43 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bookdb`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `billing`
 --
 
-DROP TABLE IF EXISTS `billing`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing` (
   `CCNumber` varchar(19) NOT NULL,
   `UserID` int(11) NOT NULL,
   `FirstName` varchar(50) NOT NULL,
   `LastName` varchar(50) NOT NULL,
   `CVV` varchar(4) NOT NULL,
-  `ExpDate` date NOT NULL,
-  PRIMARY KEY (`CCNumber`,`UserID`),
-  KEY `UserID` (`UserID`),
-  CONSTRAINT `billing_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE
+  `ExpYear` int(4) NOT NULL,
+  `CCNumber2` varchar(19) NOT NULL,
+  `UserID2` int(11) NOT NULL,
+  `FirstName2` varchar(50) NOT NULL,
+  `LastName2` varchar(50) NOT NULL,
+  `CVV2` varchar(4) NOT NULL,
+  `ExpYear2` int(4) NOT NULL,
+  `CCNumber3` varchar(19) NOT NULL,
+  `UserID3` int(11) NOT NULL,
+  `FirstName3` varchar(50) NOT NULL,
+  `LastName3` varchar(50) NOT NULL,
+  `CVV3` varchar(4) NOT NULL,
+  `ExpYear3` int(4) NOT NULL,
+  `ExpMonth` int(2) NOT NULL,
+  `ExpMonth2` int(2) NOT NULL,
+  `ExpMonth3` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `billing`
+-- Indexes for dumped tables
 --
 
-LOCK TABLES `billing` WRITE;
-/*!40000 ALTER TABLE `billing` DISABLE KEYS */;
-/*!40000 ALTER TABLE `billing` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Indexes for table `billing`
+--
+ALTER TABLE `billing`
+  ADD PRIMARY KEY (`CCNumber`,`UserID`),
+  ADD KEY `UserID` (`UserID`);
+COMMIT;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-03-16 20:47:49

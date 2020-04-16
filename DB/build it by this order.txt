@@ -1,0 +1,9 @@
+1.user
+2.author
+3.publisher
+4.book
+5.wishlist
+6.shipping
+7.billing
+8.cart
+9.review
